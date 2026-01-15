@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package mtproto;
+import "schema.tl.crc32.proto";
+import "schema.tl.sync.proto";
+option go_package = "github.com/teamgram/proto/mtproto";
+
+
+// ImmutableChannel <--
+//  + TL_immutableChannel
+//
+message ImmutableChannel {
+  string predicate_name = 1;
+  TLConstructor  constructor = 2;
+  int64 id = 3;
+  int64 creator = 4;
+  string title = 5;
+  Photo photo = 6;
+  bool deactivated = 7;
+  bool call_active = 8;
+  bool call_not_empty = 9;
+  bool noforwards = 10;
+  int32 participants_count = 11;
+  int64 date = 12;
+  int32 version = 13;
+  InputChannel migrated_to = 14;
+  ChatBannedRights default_banned_rights = 15;
+  bool can_set_username = 16;
+  string about = 17;
+  ExportedChatInvite exported_invite = 18;
+  repeated BotInfo bot_info = 19;
+  InputGroupCall call = 20;
+  int32 available_reactions_type = 21;
+  repeated string available_reactions = 22;
+  int32 ttl_period = 23;
+}
+
+
+// TL_immutableChannel
+message TL_immutableChannel {
+  ImmutableChannel data2 = 1;
+}
+
+
+// ImmutableChannelParticipant <--
+//  + TL_immutableChannelParticipant
+//
+message ImmutableChannelParticipant {
+  string predicate_name = 1;
+  TLConstructor  constructor = 2;
+  int64 id = 3;
+  int64 channel_id = 4;
+  int64 user_id = 5;
+  int32 state = 6;
+  int32 participant_type = 7;
+  string link = 8;
+  int32 useage = 9;
+  int64 inviter_user_id = 10;
+  int64 invited_at = 11;
+  int64 kicked_at = 12;
+  int64 left_at = 13;
+  ChatAdminRights admin_rights = 14;
+  int64 date = 15;
+  bool is_bot = 16;
+}
+
+// TL_immutableChannelParticipant
+message TL_immutableChannelParticipant {
+  ImmutableChannelParticipant data2 = 1;
+}
+
+// MutableChannel <--
+//  + TL_mutableChannel
+//
+message MutableChannel {
+  string predicate_name = 1;
+  TLConstructor  constructor = 2;
+  ImmutableChannel chat = 3;
+  repeated ImmutableChannelParticipant channel_participants = 4;
+}
+
+// TL_mutableChat
+message TL_mutableChannel {
+  MutableChannel data2 = 1;
+}
